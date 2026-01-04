@@ -1,0 +1,25 @@
+body{
+    font-family: Verdana;
+}    
+
+.slotRow{
+    display: flex;
+}
+
+.slotReel{
+    width: 150px;
+    image-rendering: pixelated;
+}
+    
+button{
+    font-size: 3em;
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+#resultText{
+    font-size: 3em;
+}
