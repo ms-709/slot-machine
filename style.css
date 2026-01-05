@@ -1,23 +1,87 @@
-body{
-    font-family: Verdana;
-}    
-
-.slotRow{
-    display: flex;
+html, body{
+    height: 100%; /* body's height depends on html - html needs height so body can stretch */
+    margin: 0; /* removes automatic 8px margin, which would incorrectly center */
 }
 
-.slotReel{
-    width: 150px;
+body{
+    display: flex; /* allows for horiz, vert alignment*/
+    flex-direction: column; /* aligns children vertically */
+    align-items: center; /* aligns items on vertical (cross) axis */
+    justify-content: center; /* aligns items on horizontal (main) axis */ 
+
+    font-family: Verdana;
+    background-color: rgb(45, 45, 45);
+}    
+
+:root{
+    --slotFace-height: 200px;
+    --slotFace-width: calc(var(--slotFace-height) * 3/4);
+}
+
+.slotCol{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    height: calc(var(--slotFace-height) * 3);
+    width: var(--slotFace-width);
+
+    background-color: lightcoral;
+    outline: dashed red;
+
+    /* overflow: hidden; */
+}
+
+.slotRow{
+    margin: auto;
+    display: flex;
+
+    width: calc(var(--slotFace-width) * 3);
+
+    background-color: lightskyblue;
+    outline: dashed blue;
+
+    overflow: hidden;
+}
+
+.slotFace{
+    will-change: transform; /* tells the browser that transform will change, preventing optimizations that assume it will remain static */
+
+    width: var(--slotFace-width);
     image-rendering: pixelated;
 }
     
+#buttonContainer{
+    margin-bottom: 5%;
+    display: flex;
+    background-color: lightpink;
+}
+
 button{
-    font-size: 3em;
+    /* margin: auto; does nothing atm? */
+
+    font-size: 2em;
     
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 120px;
+    padding-left: 120px;
+
+    /* background-color: rgb(189, 189, 189); */
+    /* border-color: rgb(178, 178, 178); */
+    border-radius: 20px;
+    border-color: #cc3d3d;
+    border-style: solid;
+    border-width: 5px;
+    background: #cc3d3d;
+    background: linear-gradient(0deg, #cc3d3d 0%, rgba(133, 21, 21, 1) 22%, rgba(250, 5, 5, 1) 77%);
+}
+
+button:hover{
+    background: #f01616;
+    background: linear-gradient(180deg, #f01616 0%, rgb(93, 0, 5) 22%, rgba(207, 0, 0, 1) 77%);
+    border-color: #f01616;
+    /* border-style: groove; */
 }
 
 #resultText{
