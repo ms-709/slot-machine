@@ -26,8 +26,8 @@ body{
     height: calc(var(--slotFace-height) * 3);
     width: var(--slotFace-width);
 
-    background-color: lightcoral;
-    outline: dashed red;
+    /* background-color: lightcoral; */
+    /* outline: dashed red; */
 
     /* overflow: hidden; */
 }
@@ -36,12 +36,12 @@ body{
     margin: auto;
     display: flex;
 
-    width: calc(var(--slotFace-width) * 3);
+    width: calc(var(--slotFace-width) * 5);
 
-    background-color: lightskyblue;
-    outline: dashed blue;
+    /* background-color: lightskyblue; */
+    /* outline: dashed blue; */
 
-    overflow: hidden;
+    overflow: hidden; /*toggle to see obscured reels */
 }
 
 .slotFace{
@@ -52,38 +52,33 @@ body{
 }
     
 #buttonContainer{
-    margin-bottom: 5%;
     display: flex;
-    background-color: lightpink;
+    /* background-color: lightpink; */
 }
 
 button{
     /* margin: auto; does nothing atm? */
-
+    color: #171717;
     font-size: 2em;
     
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-right: 120px;
-    padding-left: 120px;
+    padding-right: 20px;
+    padding-left: 20px;
 
-    /* background-color: rgb(189, 189, 189); */
-    /* border-color: rgb(178, 178, 178); */
-    border-radius: 20px;
-    border-color: #cc3d3d;
+    background: #ac2121;
+    /* border-radius: 20px; */
+    border-color: #171717;
     border-style: solid;
-    border-width: 5px;
-    background: #cc3d3d;
-    background: linear-gradient(0deg, #cc3d3d 0%, rgba(133, 21, 21, 1) 22%, rgba(250, 5, 5, 1) 77%);
+    border-width: 7px;
 }
 
 button:hover{
-    background: #f01616;
-    background: linear-gradient(180deg, #f01616 0%, rgb(93, 0, 5) 22%, rgba(207, 0, 0, 1) 77%);
-    border-color: #f01616;
-    /* border-style: groove; */
+    background: #7d2020;
+    border-color: #171717;
 }
 
 #resultText{
     font-size: 3em;
+    color: rgb(228, 228, 228);
 }

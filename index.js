@@ -1,20 +1,24 @@
-// const faceImgCount = 4; // how many different img tiles to choose from - for random number generator
-const rollEmptySlots = false; // whether or not empty slots can appear during a roll. affects odds
-const lineSpeed = .2; // how many seconds it takes for line to move down one space
-const facesPerSpin = 5; // how many positions a line moves during each roll
+// TO-DO:
+// 1) point system based on tile values
+// 2) money system
+// 3) new sprites
+// 4) animated arrows
 
-// old slots that were unique - might not need again
-// const slot1 = document.getElementById("slot1");
-// const slot2 = document.getElementById("slot2");
-// const slot3 = document.getElementById("slot3");
+// how many different img tiles to choose from - for random number generator
+// this number counts empty slots if rollEmptySlots is true
+const faceImgCount = 4; 
 
-// const slot4 = document.getElementById("slot4");
-// const slot5 = document.getElementById("slot5");
-// const slot6 = document.getElementById("slot6");
+// whether or not empty slots can appear during a roll. affects odds
+const rollEmptySlots = false; 
 
-// const slot7 = document.getElementById("slot7");
-// const slot8 = document.getElementById("slot8");
-// const slot9 = document.getElementById("slot9");
+// how many seconds it takes for line to move down one space
+const lineSpeed = .1; 
+
+// how much linespeed is multiplied by after each slot move
+const lineSpeedMultiplier = 1.1;
+
+// how many positions a line moves during each roll
+const facesPerSpin = 15;
 
 const line1 = document.getElementById("line1");
 const line2 = document.getElementById("line2");
@@ -68,8 +72,6 @@ async function main()
             lines[l].prepend(img);
         }
     }
-
-
 }
 
 function delay(ms)
@@ -82,7 +84,11 @@ rollButton.onclick = async function()
     if(readyToRoll)
     {
         readyToRoll = false;
-        spinLines();
+
+        document.getElementById("resultText").textContent = "Rolling...";
+        await spinLines();
+        displayResults();
+
         readyToRoll = true;
     }
 }
@@ -92,15 +98,18 @@ async function spinLines()
     // per-line loop
     for(let l = 0; l < lines.length; l++)
     {
+        let dynamicLineSpeed = lineSpeed;
+
         // per-face loop
         for(let f = 0; f < facesPerSpin; f++)
         {
             const img = document.createElement("img");
             img.className = "slotFace";
-            changeFace(img, f);
-            lineFaces[l].push(img);
 
-            console.log(`face loop flag (2): ${f}`);
+            // choose face based off RNG
+            let randNum = Math.floor(Math.random() * faceImgCount) + 1;
+            changeFace(img, randNum);
+            lineFaces[l].push(img);
             
             lines[l].prepend(img);
 
@@ -110,12 +119,26 @@ async function spinLines()
             lines[l].offsetHeight;
         
             // move line down one space
-            lines[l].style.transition = `transform ${lineSpeed}s linear`;
+            if(f == 0)
+            {
+                lines[l].style.transition = `transform ${dynamicLineSpeed}s ease-in`;
+            }
+            else if(f < facesPerSpin-1)
+            {
+                lines[l].style.transition = `transform ${dynamicLineSpeed}s linear`;
+            }
+            else
+            {
+                lines[l].style.transition = `transform ${dynamicLineSpeed}s ease-out`;
+            }
+                
             lines[l].style.transform = `translateY(0px)`;
 
             await waitForTransition(lines[l]);
 
             lineFaces[l].shift().remove();
+
+            dynamicLineSpeed *= lineSpeedMultiplier;
         }
     }
 }
@@ -123,6 +146,28 @@ async function spinLines()
 function changeFace(outputSlot, value)
 {
     outputSlot.src = `${faceImgs[value]}`;
+}
+
+function displayResults()
+{
+    // lineFaces[l][3] is the winning row
+    if(lineFaces[0][3].src == lineFaces[1][3].src && lineFaces[0][3].src == lineFaces[2][3].src)
+    {
+        document.getElementById("resultText").textContent = "You win!";
+    }
+    else
+    {
+        document.getElementById("resultText").textContent = "You lose.";
+    }
+
+    // for(let l = 0; l < lines.length; l++)
+    // {
+    //     for(let f = 0; f < facesPerSpin; f++)
+    //     {
+    //         console.log(`l: ${l}, f: ${f}; ${lineFaces[l][f].src}`);
+    //     }
+    // }
+    
 }
 
 function waitForTransition(element)
